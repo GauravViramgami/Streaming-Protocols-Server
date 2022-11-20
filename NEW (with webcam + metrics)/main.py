@@ -11,7 +11,7 @@ _1080p = fs.Representation(fs.Size(1920, 1080), fs.Bitrate(4096 * 1024, 320 * 10
 dash = video.dash(fs.Formats.h264())
 dash.representations(_240p, _360p, _480p, _720p, _1080p)
 # dash.auto_generate_representations()
-dash.output('/home/kali/Downloads/Streaming/mix/dash/live/live.mpd')
+dash.output('/home/kali/Downloads/Streaming-Protocols-Server/NEW (with webcam + metrics)/dash/live/live.mpd')
 
 # video = fs.input('sample_video.mp4', capture=True)
 
