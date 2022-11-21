@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MPD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:mpeg:dash:schema:mpd:2011"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xsi:schemaLocation="urn:mpeg:DASH:schema:MPD:2011 http://standards.iso.org/ittf/PubliclyAvailableStandards/MPEG-DASH_schema_files/DASH-MPD.xsd"
+	profiles="urn:mpeg:dash:profile:isoff-live:2011"
+	type="static"
+	mediaPresentationDuration="PT6M9.8S"
+	maxSegmentDuration="PT2.0S"
+	minBufferTime="PT4.0S">
+	<ProgramInformation>
+	</ProgramInformation>
+	<ServiceDescription id="0">
+	</ServiceDescription>
+	<Period id="0" start="PT0.0S">
+		<AdaptationSet id="0" contentType="video" startWithSAP="1" segmentAlignment="true" bitstreamSwitching="true" frameRate="30/1" maxWidth="640" maxHeight="360" par="16:9">
+			<Representation id="0" mimeType="video/mp4" codecs="mp4v.6c" bandwidth="10257156" width="640" height="360" scanType="unknown" sar="1:1">
+				<SegmentTemplate timescale="1000000" initialization="init-stream$RepresentationID$.m4s" media="chunk-stream$RepresentationID$-$Number%05d$.m4s" startNumber="155">
+					<SegmentTimeline>
+						<S t="311115892" d="2016865" />
+						<S d="2001098" />
+						<S d="2017027" />
+						<S d="2016931" />
+						<S d="2033100" />
+						<S d="2016959" />
+						<S d="2017162" />
+						<S d="2032838" />
+						<S d="2016973" />
+						<S d="2017240" />
+						<S d="2000589" />
+						<S d="1985210" />
+						<S d="2016770" />
+						<S d="2033319" />
+						<S d="2017169" />
+						<S d="2017183" />
+						<S d="2032611" />
+						<S d="2016871" />
+						<S d="2000856" />
+						<S d="2017360" />
+						<S d="2017030" />
+						<S d="2032796" />
+						<S d="2017064" />
+						<S d="2017435" />
+						<S d="2032637" />
+						<S d="2017123" />
+						<S d="2017331" />
+						<S d="2033041" />
+						<S d="2016778" />
+						<S d="240555" />
+					</SegmentTimeline>
+				</SegmentTemplate>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+</MPD>

@@ -18,6 +18,28 @@
                     </div>
                 </div>
             </div>
+            <div class="p-5 border rounded-3">
+                <h4>Settings</h4>
+                <div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="minBitrate">
+                            Min BItrate:
+                        </label>
+                        <div id="minEntry">
+                            <input id="minBitrate" type="text"> <br>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="maxBitrate">
+                            Max BItrate:
+                        </label>
+                        <div id="maxEntry">
+                            <input id="maxBitrate" type="text"> <br>
+                        </div>
+                    </div>
+                    <div><button onclick="applyChanges()">Apply Changes</button></div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="p-5 border rounded-3">
                     <h4>Metrics</h4>
@@ -44,13 +66,25 @@
         <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
         <script src="/dashjs/contrib/akamai/controlbar/ControlBar.js"></script>
         <script>
-            (function (){
-                var video,
+            var video,
                     player,
-                    url = "/dash/dash.mpd";
+                    url = "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd";
+            (function (){
 
                 video = document.querySelector("video");
                 player = dashjs.MediaPlayer().create();
+
+                // player.updateSettings({
+                //     streaming: {
+                //         buffer: {
+                //             bufferTimeAtTopQuality: 1,
+                //             bufferTimeAtTopQualityLongForm: 1,
+                //             stableBufferTime: 1,
+                //             longFormContentDurationThreshold: 1,
+                //         }
+                //     }
+                // });
+                
                 player.initialize(video, url, true);
                 player.on(dashjs.MediaPlayer.events["PLAYBACK_ENDED"], function () {
                     clearInterval(eventPoller);
@@ -69,7 +103,8 @@
                         var bitrate = repSwitch ? Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to, periodIdx) / 1000) : NaN;
                         var adaptation = dashAdapter.getAdaptationForType(periodIdx, 'video', streamInfo);
                         var currentRep = adaptation.Representation_asArray.find(function (rep) {
-                            return rep.id === repSwitch.to
+                            // console.log(repSwitch.mt.toString() === rep.id.toString());
+                            return rep.id.toString() === repSwitch.to.toString()
                         })
                         var frameRate = currentRep.frameRate;
                         var resolution = currentRep.width + 'x' + currentRep.height;
@@ -94,6 +129,17 @@
 
 
             })();
+
+            function applyChanges () {
+                player.updateSettings({
+                    streaming: {
+                        abr: {
+                            maxBitrate: { audio: -1, video: document.querySelector('#maxBitrate').value },
+                            minBitrate: { audio: -1, video: document.querySelector('#minBitrate').value },
+                        }
+                    }
+                });
+            }
         </script>
     </body>
 </html>

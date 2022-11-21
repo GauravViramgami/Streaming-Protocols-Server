@@ -16,10 +16,11 @@
         <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
         <script>
             (function(){
-                var url = "dash/dash.mpd";
+                var url = "/dash/live/live.mpd";
                 var player = dashjs.MediaPlayer().create();
                 player.initialize(document.querySelector("#videoPlayer"), url, true);
             })();
+
         </script>
     </body>
 </html>

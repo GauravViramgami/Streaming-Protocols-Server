@@ -131,6 +131,17 @@
                 firstLoad = false;
                 var url = document.getElementById('manifest').value;
                 player = dashjs.MediaPlayer().create();
+
+                // player.updateSettings({
+                //     streaming: {
+                //         abr: {
+                //             maxBitrate: { audio: -1, video: 5000 },
+                //             minBitrate: { audio: -1, video: 4000 },
+                //         }
+                //     }
+                // });
+
+
                 player.updateSettings({ 'debug': { 'logLevel': dashjs.Debug.LOG_LEVEL_NONE } });
         
                 switch (document.querySelector('input[name="delay"]:checked').value) {

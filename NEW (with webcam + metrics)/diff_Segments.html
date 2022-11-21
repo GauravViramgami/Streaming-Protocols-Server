@@ -1,0 +1,376 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js Rocks</title>
+        <style>
+            video {
+                width: 640px;
+                height: 360px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="dash-video-player ">
+                    <div class="videoContainer" id="videoContainer">
+                        <video id="video1" preload="auto" controls="true"></video>
+                    </div>
+                </div>
+                <div class="dash-video-player ">
+                    <div class="videoContainer" id="videoContainer">
+                        <video id="video2" preload="auto" controls="true"></video>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dash-video-player ">
+                    <div class="videoContainer" id="videoContainer">
+                        <video id="video3" preload="auto" controls="true"></video>
+                    </div>
+                </div>
+                <div class="dash-video-player ">
+                    <div class="videoContainer" id="videoContainer">
+                        <video id="video4" preload="auto" controls="true"></video>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 border rounded-3">
+                <h4>Settings</h4>
+                <div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="minBitrate">
+                            Min BItrate:
+                        </label>
+                        <div id="minEntry">
+                            <input id="minBitrate" type="text"> <br>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="maxBitrate">
+                            Max BItrate:
+                        </label>
+                        <div id="maxEntry">
+                            <input id="maxBitrate" type="text"> <br>
+                        </div>
+                    </div>
+                    <div><button onclick="applyChanges()">Apply Changes</button></div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="p-5 border rounded-3">
+                        <h4>Metrics (Video 1)</h4>
+                        <div>
+                            <strong>Reported bitrate:</strong>
+                            <span id="reportedBitrate1">14932 Kbps</span>
+                            <br>
+                            <strong>Buffer level:</strong>
+                            <span id="bufferLevel1">62.743 secs</span>
+                            <div id="chrome-only">
+                                <strong>Calculated bitrate:</strong>
+                                <span id="calculatedBitrate1">0 Kbps</span>
+                            </div>
+                            <strong>Framerate:</strong>
+                            <span id="framerate1">30 fps</span>    
+                            <br>
+                            <strong>Resolution:</strong>
+                            <span id="resolution1">3840x2160</span>
+                        </div>
+                    </div>
+                    <div class="p-5 border rounded-3">
+                        <h4>Metrics (Video 2)</h4>
+                        <div>
+                            <strong>Reported bitrate:</strong>
+                            <span id="reportedBitrate2">14932 Kbps</span>
+                            <br>
+                            <strong>Buffer level:</strong>
+                            <span id="bufferLevel2">62.743 secs</span>
+                            <div id="chrome-only">
+                                <strong>Calculated bitrate:</strong>
+                                <span id="calculatedBitrate2">0 Kbps</span>
+                            </div>
+                            <strong>Framerate:</strong>
+                            <span id="framerate2">30 fps</span>    
+                            <br>
+                            <strong>Resolution:</strong>
+                            <span id="resolution2">3840x2160</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="p-5 border rounded-3">
+                        <h4>Metrics (Video 3)</h4>
+                        <div>
+                            <strong>Reported bitrate:</strong>
+                            <span id="reportedBitrate3">14932 Kbps</span>
+                            <br>
+                            <strong>Buffer level:</strong>
+                            <span id="bufferLevel3">62.743 secs</span>
+                            <div id="chrome-only">
+                                <strong>Calculated bitrate:</strong>
+                                <span id="calculatedBitrate3">0 Kbps</span>
+                            </div>
+                            <strong>Framerate:</strong>
+                            <span id="framerate3">30 fps</span>    
+                            <br>
+                            <strong>Resolution:</strong>
+                            <span id="resolution3">3840x2160</span>
+                        </div>
+                    </div>
+                    <div class="p-5 border rounded-3">
+                        <h4>Metrics (Video 4)</h4>
+                        <div>
+                            <strong>Reported bitrate:</strong>
+                            <span id="reportedBitrate4">14932 Kbps</span>
+                            <br>
+                            <strong>Buffer level:</strong>
+                            <span id="bufferLevel4">62.743 secs</span>
+                            <div id="chrome-only">
+                                <strong>Calculated bitrate:</strong>
+                                <span id="calculatedBitrate4">0 Kbps</span>
+                            </div>
+                            <strong>Framerate:</strong>
+                            <span id="framerate4">30 fps</span>    
+                            <br>
+                            <strong>Resolution:</strong>
+                            <span id="resolution4">3840x2160</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+        <script src="/dashjs/contrib/akamai/controlbar/ControlBar.js"></script>
+        <script>
+            var video1, video2, video3, video4,
+                    player1, player2, player3, player4, load_ = true;
+            var url1 = "/dash/seg1/dash.mpd";
+            var url2 = "/dash/seg2/dash.mpd";
+            var url3 = "/dash/seg5/dash.mpd";
+            var url4 = "/dash/seg10/dash.mpd";
+
+            (function (){
+
+                video1 = document.getElementById("video1");
+                video2 = document.getElementById("video2");
+                video3 = document.getElementById("video3");
+                video4 = document.getElementById("video4");
+
+                player1 = dashjs.MediaPlayer().create();
+                player2 = dashjs.MediaPlayer().create();
+                player3 = dashjs.MediaPlayer().create();
+                player4 = dashjs.MediaPlayer().create();
+
+                player1.initialize(video1, url1, true);
+                player2.initialize(video2, url2, true);
+                player3.initialize(video3, url3, true);
+                player4.initialize(video4, url4, true);
+
+                player1.on(dashjs.MediaPlayer.events["PLAYBACK_ENDED"], function () {
+                    clearInterval(eventPoller1);
+                    clearInterval(bitrateCalculator1);
+                });
+                player2.on(dashjs.MediaPlayer.events["PLAYBACK_ENDED"], function () {
+                    clearInterval(eventPoller2);
+                    clearInterval(bitrateCalculator2);
+                });
+                player3.on(dashjs.MediaPlayer.events["PLAYBACK_ENDED"], function () {
+                    clearInterval(eventPoller3);
+                    clearInterval(bitrateCalculator3);
+                });
+                player4.on(dashjs.MediaPlayer.events["PLAYBACK_ENDED"], function () {
+                    clearInterval(eventPoller4);
+                    clearInterval(bitrateCalculator4);
+                });
+
+                var eventPoller1 = setInterval(function () {
+                    var streamInfo = player1.getActiveStream().getStreamInfo();
+                    var dashMetrics = player1.getDashMetrics();
+                    var dashAdapter = player1.getDashAdapter();
+
+                    if (dashMetrics && streamInfo) {
+                        const periodIdx = streamInfo.index;
+                        var repSwitch = dashMetrics.getCurrentRepresentationSwitch('video', true);
+                        var bufferLevel = dashMetrics.getCurrentBufferLevel('video', true);
+                        var bitrate = repSwitch ? Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to, periodIdx) / 1000) : NaN;
+                        var adaptation = dashAdapter.getAdaptationForType(periodIdx, 'video', streamInfo);
+                        var currentRep = adaptation.Representation_asArray.find(function (rep) {
+                            return rep.id === repSwitch.to
+                        })
+                        var frameRate = currentRep.frameRate;
+                        var resolution = currentRep.width + 'x' + currentRep.height;
+                        document.getElementById('bufferLevel1').innerText = bufferLevel + " secs";
+                        document.getElementById('framerate1').innerText = frameRate + " fps";
+                        document.getElementById('reportedBitrate1').innerText = bitrate + " Kbps";
+                        document.getElementById('resolution1').innerText = resolution;
+                    }
+
+                }, 1000);
+
+                if (video1.webkitVideoDecodedByteCount !== undefined) {
+                    var lastDecodedByteCount = 0;
+                    const bitrateInterval = 5;
+                    var bitrateCalculator1 = setInterval(function () {
+                        var calculatedBitrate = (((video1.webkitVideoDecodedByteCount - lastDecodedByteCount) / 1000) * 8) / bitrateInterval;
+                        document.getElementById('calculatedBitrate1').innerText = Math.round(calculatedBitrate) + " Kbps";
+                        lastDecodedByteCount = video1.webkitVideoDecodedByteCount;
+                    }, bitrateInterval * 1000);
+                } else {
+                    document.getElementById('chrome-only').style.display = "none";
+                }
+
+                var eventPoller2 = setInterval(function () {
+                    var streamInfo = player2.getActiveStream().getStreamInfo();
+                    var dashMetrics = player2.getDashMetrics();
+                    var dashAdapter = player2.getDashAdapter();
+
+                    if (dashMetrics && streamInfo) {
+                        const periodIdx = streamInfo.index;
+                        var repSwitch = dashMetrics.getCurrentRepresentationSwitch('video', true);
+                        var bufferLevel = dashMetrics.getCurrentBufferLevel('video', true);
+                        var bitrate = repSwitch ? Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to, periodIdx) / 1000) : NaN;
+                        var adaptation = dashAdapter.getAdaptationForType(periodIdx, 'video', streamInfo);
+                        var currentRep = adaptation.Representation_asArray.find(function (rep) {
+                            return rep.id === repSwitch.to
+                        })
+                        var frameRate = currentRep.frameRate;
+                        var resolution = currentRep.width + 'x' + currentRep.height;
+                        document.getElementById('bufferLevel2').innerText = bufferLevel + " secs";
+                        document.getElementById('framerate2').innerText = frameRate + " fps";
+                        document.getElementById('reportedBitrate2').innerText = bitrate + " Kbps";
+                        document.getElementById('resolution2').innerText = resolution;
+                    }
+
+                }, 1000);
+
+                if (video2.webkitVideoDecodedByteCount !== undefined) {
+                    var lastDecodedByteCount = 0;
+                    const bitrateInterval = 5;
+                    var bitrateCalculator2 = setInterval(function () {
+                        var calculatedBitrate = (((video2.webkitVideoDecodedByteCount - lastDecodedByteCount) / 1000) * 8) / bitrateInterval;
+                        document.getElementById('calculatedBitrate2').innerText = Math.round(calculatedBitrate) + " Kbps";
+                        lastDecodedByteCount = video2.webkitVideoDecodedByteCount;
+                    }, bitrateInterval * 1000);
+                } else {
+                    document.getElementById('chrome-only').style.display = "none";
+                }
+
+                var eventPoller3 = setInterval(function () {
+                    var streamInfo = player3.getActiveStream().getStreamInfo();
+                    var dashMetrics = player3.getDashMetrics();
+                    var dashAdapter = player3.getDashAdapter();
+
+                    if (dashMetrics && streamInfo) {
+                        const periodIdx = streamInfo.index;
+                        var repSwitch = dashMetrics.getCurrentRepresentationSwitch('video', true);
+                        var bufferLevel = dashMetrics.getCurrentBufferLevel('video', true);
+                        var bitrate = repSwitch ? Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to, periodIdx) / 1000) : NaN;
+                        var adaptation = dashAdapter.getAdaptationForType(periodIdx, 'video', streamInfo);
+                        var currentRep = adaptation.Representation_asArray.find(function (rep) {
+                            return rep.id === repSwitch.to
+                        })
+                        var frameRate = currentRep.frameRate;
+                        var resolution = currentRep.width + 'x' + currentRep.height;
+                        document.getElementById('bufferLevel3').innerText = bufferLevel + " secs";
+                        document.getElementById('framerate3').innerText = frameRate + " fps";
+                        document.getElementById('reportedBitrate3').innerText = bitrate + " Kbps";
+                        document.getElementById('resolution3').innerText = resolution;
+                    }
+
+                }, 1000);
+
+                if (video3.webkitVideoDecodedByteCount !== undefined) {
+                    var lastDecodedByteCount = 0;
+                    const bitrateInterval = 5;
+                    var bitrateCalculator3 = setInterval(function () {
+                        var calculatedBitrate = (((video3.webkitVideoDecodedByteCount - lastDecodedByteCount) / 1000) * 8) / bitrateInterval;
+                        document.getElementById('calculatedBitrate3').innerText = Math.round(calculatedBitrate) + " Kbps";
+                        lastDecodedByteCount = video3.webkitVideoDecodedByteCount;
+                    }, bitrateInterval * 1000);
+                } else {
+                    document.getElementById('chrome-only').style.display = "none";
+                }
+
+                var eventPoller4 = setInterval(function () {
+                    var streamInfo = player4.getActiveStream().getStreamInfo();
+                    var dashMetrics = player4.getDashMetrics();
+                    var dashAdapter = player4.getDashAdapter();
+
+                    if (dashMetrics && streamInfo) {
+                        const periodIdx = streamInfo.index;
+                        var repSwitch = dashMetrics.getCurrentRepresentationSwitch('video', true);
+                        var bufferLevel = dashMetrics.getCurrentBufferLevel('video', true);
+                        var bitrate = repSwitch ? Math.round(dashAdapter.getBandwidthForRepresentation(repSwitch.to, periodIdx) / 1000) : NaN;
+                        var adaptation = dashAdapter.getAdaptationForType(periodIdx, 'video', streamInfo);
+                        var currentRep = adaptation.Representation_asArray.find(function (rep) {
+                            return rep.id === repSwitch.to
+                        })
+                        var frameRate = currentRep.frameRate;
+                        var resolution = currentRep.width + 'x' + currentRep.height;
+                        document.getElementById('bufferLevel4').innerText = bufferLevel + " secs";
+                        document.getElementById('framerate4').innerText = frameRate + " fps";
+                        document.getElementById('reportedBitrate4').innerText = bitrate + " Kbps";
+                        document.getElementById('resolution4').innerText = resolution;
+                    }
+
+                }, 1000);
+
+                if (video4.webkitVideoDecodedByteCount !== undefined) {
+                    var lastDecodedByteCount = 0;
+                    const bitrateInterval = 5;
+                    var bitrateCalculator4 = setInterval(function () {
+                        var calculatedBitrate = (((video4.webkitVideoDecodedByteCount - lastDecodedByteCount) / 1000) * 8) / bitrateInterval;
+                        document.getElementById('calculatedBitrate4').innerText = Math.round(calculatedBitrate) + " Kbps";
+                        lastDecodedByteCount = video4.webkitVideoDecodedByteCount;
+                    }, bitrateInterval * 1000);
+                } else {
+                    document.getElementById('chrome-only').style.display = "none";
+                }
+
+            })();
+
+            function applyChanges () {
+                player1.updateSettings({
+                    streaming: {
+                        abr: {
+                            maxBitrate: { audio: -1, video: document.querySelector('#minBitrate').value },
+                            minBitrate: { audio: -1, video: document.querySelector('#maxBitrate').value },
+                        }
+                    }
+                });
+
+                player2.updateSettings({
+                    streaming: {
+                        abr: {
+                            maxBitrate: { audio: -1, video: document.querySelector('#minBitrate').value },
+                            minBitrate: { audio: -1, video: document.querySelector('#maxBitrate').value },
+                        }
+                    }
+                });
+
+                player3.updateSettings({
+                    streaming: {
+                        abr: {
+                            maxBitrate: { audio: -1, video: document.querySelector('#minBitrate').value },
+                            minBitrate: { audio: -1, video: document.querySelector('#maxBitrate').value },
+                        }
+                    }
+                });
+
+                player4.updateSettings({
+                    streaming: {
+                        abr: {
+                            maxBitrate: { audio: -1, video: document.querySelector('#minBitrate').value },
+                            minBitrate: { audio: -1, video: document.querySelector('#maxBitrate').value },
+                        }
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

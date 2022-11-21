@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MPD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="urn:mpeg:dash:schema:mpd:2011"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xsi:schemaLocation="urn:mpeg:DASH:schema:MPD:2011 http://standards.iso.org/ittf/PubliclyAvailableStandards/MPEG-DASH_schema_files/DASH-MPD.xsd"
+	profiles="urn:mpeg:dash:profile:isoff-live:2011"
+	type="static"
+	mediaPresentationDuration="PT19M22.9S"
+	maxSegmentDuration="PT1.0S"
+	minBufferTime="PT7.0S">
+	<ProgramInformation>
+		<Title>**Award Winning** CGI Animated Short Film: &quot;Crow: The Legend&quot; by Baobab Studios | CGMeetup</Title>
+	</ProgramInformation>
+	<ServiceDescription id="0">
+	</ServiceDescription>
+	<Period id="0" start="PT0.0S">
+		<AdaptationSet id="0" contentType="video" startWithSAP="1" segmentAlignment="true" bitstreamSwitching="true" frameRate="446576000/18607339" maxWidth="1920" maxHeight="1080" par="16:9" lang="eng">
+			<Representation id="0" mimeType="video/webm" codecs="vp09.00.40.08" bandwidth="1023134" width="1920" height="1080" scanType="unknown" sar="1:1">
+				<SegmentTemplate timescale="1000" initialization="init-stream$RepresentationID$.webm" media="chunk-stream$RepresentationID$-$Number%05d$.webm" startNumber="278">
+					<SegmentTimeline>
+						<S t="1058891" d="5374" />
+						<S d="5084" />
+						<S d="5333" />
+						<S d="4375" />
+						<S d="5500" />
+						<S d="5459" />
+						<S d="1374" />
+						<S d="4084" />
+						<S d="3041" />
+						<S d="1917" />
+						<S d="2917" />
+						<S d="2583" />
+						<S d="1292" />
+						<S d="4125" />
+						<S d="4833" />
+						<S d="2000" />
+						<S d="3167" />
+						<S d="2249" />
+						<S d="2250" />
+						<S d="4376" />
+						<S d="1791" />
+						<S d="5250" />
+						<S d="1209" />
+						<S d="3750" />
+						<S d="5124" />
+						<S d="2250" />
+						<S d="2959" />
+						<S d="1917" />
+						<S d="3542" />
+						<S d="4958" />
+					</SegmentTimeline>
+				</SegmentTemplate>
+			</Representation>
+		</AdaptationSet>
+		<AdaptationSet id="1" contentType="audio" startWithSAP="1" segmentAlignment="true" bitstreamSwitching="true" lang="eng">
+			<Representation id="1" mimeType="audio/mp4" codecs="mp4a.40.2" bandwidth="128000" audioSamplingRate="48000">
+				<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2" />
+				<SegmentTemplate timescale="48000" initialization="init-stream$RepresentationID$.m4s" media="chunk-stream$RepresentationID$-$Number%05d$.m4s" startNumber="1131">
+					<SegmentTimeline>
+						<S t="54384688" d="48128" r="28" />
+						<S d="43400" />
+					</SegmentTimeline>
+				</SegmentTemplate>
+			</Representation>
+		</AdaptationSet>
+	</Period>
+</MPD>
